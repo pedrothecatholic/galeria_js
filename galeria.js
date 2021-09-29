@@ -1,7 +1,7 @@
 "use strict"
 
 const imagens = [
-    "img/"
+    "img/",
 ]
 
 
@@ -20,18 +20,25 @@ const criarItem = (urlImagem) => {
 
 const carregarGaleria = () => imagens.forEach(criarItem)
 
-const criarSlide = (urlImagem) => {
+const criarSlide = (urlImagem, indice, array) => {
     const container = document.querySelector(".slide-container")
     const novoDiv = document.createElement("div")
     novoDiv.classList.add("slide")
     novoDiv.id = limparId(urlImagem)
+
+    const indiceAnterior = indice <= 0 ? array.length - 1 : indice - 1
+    const idAnterior = limparId (array[indiceAnterior])
+
+    const indiceProximo = indice >= array.length - 1 ? 0 : indice + 1
+    const idProximo = limparId (array [indiceProximo])
+
     novoDiv.innerHTML = `
         <div class="slide" id="demon-slayer">
             <div class="imagem-container">
                   <a href="" class="icones fechar">&#10006;</a>
-                  <a href="#zenitsu-agatsuma" class="icones anterior">&#171;</a>
+                  <a href="${imagemAnterior}" class="icones anterior">&#171;</a>
                   <img src="${urlImagem}" alt="">
-                  <a href="#giyu-tomioka" class="icones proximo">&#187;</a>
+                  <a href="${imagemProximo}" class="icones proximo">&#187;</a>
                 </div>
             </div>`        
 }
