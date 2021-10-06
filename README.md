@@ -1,1 +1,1 @@
-# galeria_js
+# PWFE-galeria_js
