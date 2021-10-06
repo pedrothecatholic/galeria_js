@@ -1,11 +1,34 @@
 "use strict"
 
-const imagens = [
-    "img/",
-]
+const limparElemento = (elemento) => {
+    while (elemento.firstChild){
+        elemento.removeChild(elemento.lastChild)
+    }
+}
 
+const pegarImagens = (raca) => fetch(`https://dog.ceo/api/breed/${raca}/images`)
 
-const limparId = (url) => url.replace("./img/","").split(".")[0].replace(" ", "-")
+const pesquisarImagens = async (evento) => {
+
+    if (evento.key == 'Enter') {
+        const raca = evento.target.value
+        const imagensResponse = await pegarImagens(raca)
+        const imagens = await imagensResponse.json()
+
+        limparElemento(document.querySelector(".galeria-container"))
+        limparElemento(document.querySelector(".slide-container"))
+
+        carregarGaleria(imagens.message)
+        carregarSlide(imagens.message)
+    }
+
+}
+
+const limparId = (url) => {
+    const ultimaBarra = url.lastIndexOf("/")
+    const ultimoPonto = url.lastIndexOf(".")
+    console.log(url.substring(ultimaBarra, ultimoPonto).replace(" ", "-"))
+}
 
 const criarItem = (urlImagem) => {
     const container = document.querySelector(".galeria-container")
@@ -18,7 +41,7 @@ const criarItem = (urlImagem) => {
     container.appendChild(novoLink)
 }
 
-const carregarGaleria = () => imagens.forEach(criarItem)
+const carregarGaleria = (imagens) => imagens.forEach(criarItem)
 
 const criarSlide = (urlImagem, indice, array) => {
     const container = document.querySelector(".slide-container")
@@ -27,23 +50,25 @@ const criarSlide = (urlImagem, indice, array) => {
     novoDiv.id = limparId(urlImagem)
 
     const indiceAnterior = indice <= 0 ? array.length - 1 : indice - 1
-    const idAnterior = limparId (array[indiceAnterior])
+    const idAnterior = limparId(array[indiceAnterior])
 
     const indiceProximo = indice >= array.length - 1 ? 0 : indice + 1
-    const idProximo = limparId (array [indiceProximo])
+    const idProximo = limparId(array[indiceProximo])
 
     novoDiv.innerHTML = `
-        <div class="slide" id="demon-slayer">
             <div class="imagem-container">
                   <a href="" class="icones fechar">&#10006;</a>
-                  <a href="${imagemAnterior}" class="icones anterior">&#171;</a>
+                  <a href="#${idAnterior}" class="icones anterior">&#171;</a>
                   <img src="${urlImagem}" alt="">
-                  <a href="${imagemProximo}" class="icones proximo">&#187;</a>
+                  <a href="#${idProximo}" class="icones proximo">&#187;</a>
                 </div>
-            </div>`        
+            </div>
+        `
+
+    container.appendChild(novoDiv)
 }
 
 const carregarSlide = (imagens) => imagens.forEach(criarSlide)
 
-carregarGaleria(imagens)
-carregarSlide(imagens)
+document.querySelector(".pesquisa-container")
+        .addEventListener("keypress", pesquisarImagens)
