@@ -70,7 +70,7 @@ input {
 }
 
 .galeria-items:hover {
-    box-shadow: 10px 10px 20px #000;
+    box-shadow: 10px 10px 20px rgb(198, 177, 71);
 }
 
 .galeria-items img {
@@ -116,7 +116,7 @@ input {
     text-decoration: none;
     width: 40px;
     height: 40px;
-    background-color: #000;
+    background-color: rgb(198, 177, 71);
     color: #FFF;
     display: flex;
     align-items: center;
@@ -131,7 +131,7 @@ input {
 }
 
 .slide .fechar:hover {
-    background-color: black;
+    background-color: rgb(198, 177, 71);
 }
 
 .slide .anterior {
@@ -160,7 +160,7 @@ footer {
 @media (max-width: 1280px) {
     body {
         background-image: none;
-        background-color: black;
+        background-color: rgb(198, 177, 71);
     }
 }
 
